@@ -1,0 +1,10 @@
+<ul>
+    <li *ngFor="let product of products">
+        <div [appHighlight]="product.discounted">
+            <p>{{product.name}}</p>
+            <p>{{product.price}}</p>
+            <input type="number" min="1" placeholder="1"/>
+            <button>Remove</button>
+        </div>
+    </li>
+</ul>
