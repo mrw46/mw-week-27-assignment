@@ -1,10 +1,17 @@
 <ul>
-    <li *ngFor="let product of products">
-        <div [appHighlight]="product.discounted">
-            <p>{{product.name}}</p>
-            <p>{{product.price}}</p>
-            <input type="number" min="1" placeholder="1"/>
-            <button>Remove</button>
+    <li [appHighlight]="product.discounted" *ngFor="let product of products">
+        <p class="name">{{product.name}}</p>
+        <div class="price">
+            <p [ngClass]="{'no-discount': true, 'crossed-out': product.discounted}" class="no-discount">{{product.price | currency:'GBP'}}</p>
+            <p *ngIf="product.discounted" class="with-discount">{{product.discounted ? (product.price | discount:product.percentDiscount | currency:'GBP') : (product.price | currency:'GBP')}}</p>
         </div>
+        <input class="quantity" type="number" [(ngModel)]="product.quantity" (change)="quantityChange()" min="1" placeholder="1"/>
+        <button>Remove</button>
+        <p *ngIf="product.discounted">{{product.percentDiscount}}% discount!</p>
     </li>
 </ul>
+<div class="cart-summary">
+    <h2>Summary:</h2>
+    <p>Total: <span>{{totalPrice | currency:'GBP'}}</span></p>
+    <p>With discount: <span>{{withDiscount | currency:'GBP'}}</span></p>
+</div>
